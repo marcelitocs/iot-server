@@ -1,9 +1,9 @@
 const WebSocket = require("ws");
 const Gpio = require('onoff').Gpio;
 
-var door = new Gpio(17, 'out');
+var door = new Gpio(14, 'high');
 
-const wss = new WebSocket.Server({ port: process.env.PORT });
+const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('connection', function connection(ws) {
     console.log(`connected`);
@@ -48,18 +48,18 @@ const keepAliveInterval = setInterval(() => {
 let commands = {
     openDoor(ws, rid, params) {
         console.log("opening the door");
-        door.write(1, function(err) {
+        door.write(0, function(err) {
             if (err) {
                 console.error(err);
-                ws.send(JSON.parse({ rid: rid, error: err.message }));
+                ws.send(JSON.stringify({ rid: rid, error: err.message }));
             }
             setTimeout(function() {
-                door.write(0, function(err) {
+                door.write(1, function(err) {
                     if (err) {
                         console.error(err);
-                        ws.send(JSON.parse({ rid: rid, error: err.message }));
+                        ws.send(JSON.stringify({ rid: rid, error: err.message }));
                     }
-                    ws.send(JSON.parse({ rid: rid, data: "OK" }));
+                    ws.send(JSON.stringify({ rid: rid, data: "OK" }));
                 });
             }, 1000);
         });
@@ -68,4 +68,5 @@ let commands = {
 
 process.on('SIGINT', function() {
     door.unexport();
+	process.exit();
 });
