@@ -10,5 +10,5 @@ Este projeto servirá inicialmente como servidor para abertura de portas
 
 ####Comandos suportados:
 
-openDoor - Comando utiliado para enviar o sinal para abertura da porta.
+* openDoor - Comando utiliado para enviar o sinal para abertura da porta.
 
