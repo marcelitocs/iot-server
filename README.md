@@ -2,11 +2,13 @@
 
 Este projeto servirá inicialmente como servidor para abertura de portas
 
-Estrutura de envio de comandos:
+####Estrutura de envio de comandos:
 
-{"command": [o comando]}
+```
+{"command": [oComando]}
+```
 
-Comandos suportados:
+####Comandos suportados:
 
 openDoor - Comando utiliado para enviar o sinal para abertura da porta.
 
